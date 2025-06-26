@@ -1,0 +1,32 @@
+{
+  "$schema": "https://typedoc.org/schema.json",
+  "name": "Motif API",
+  "tsconfig": "./tsconfig.json",
+  "entryPoints": [
+    "../motif/motif/lib/src/eager/extensions/api/types",
+    "../motif/motif/lib/src/eager/extensions/api/extension-svc",
+    "../motif/motif/lib/src/eager/extensions/api/frame-svc",
+    "../motif/motif/lib/src/eager/extensions/api/extension-registrar.d.ts",
+    "../motif/motif/lib/src/eager/extensions/api/extension.d.ts",
+  ],
+
+  "entryPointStrategy": "expand",
+  "alwaysCreateEntryPointModule": false,
+  "exclude": ["../motif/motif/lib/src/eager/extensions/api/**/index.d.ts"],
+  "excludeInternal": true,
+  "readme": "README.md",
+  "includeVersion": true,
+  "excludePrivate": true,
+  "excludeProtected": true,
+  "router": "structure-dir",
+  "disableSources": true,
+  "hostedBaseUrl": "https://plxtra.org/motif-api/",
+  // "projectDocuments": [
+  //   "src-docs/overview/index.md",
+  // ],
+  "out": "./docs/motif-api/",
+  "navigationLinks": {
+      "GitHub": "https://github.com/plxtra/motif-api",
+      "Motif": "https://www.npmjs.com/package/@plxtra/motif-core",
+  },
+}

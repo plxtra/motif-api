@@ -1,0 +1,57 @@
+name: Deploy to GitHub Pages
+
+on:
+  # Trigger the workflow every time you push to the `main` branch
+  # Using a different branch name? Replace `main` with your branch’s name
+  push:
+    branches: [ docs-publish ]
+  # Allows you to run this workflow manually from the Actions tab on GitHub.
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      # Use reusable workflow
+      # https://stackoverflow.com/questions/70003863/reusing-github-action-workflow-steps-inside-another-job
+      - name: Checkout Motif API repository
+        uses: actions/checkout@v4
+        with:
+          path: motif-api
+
+      - name: Checkout Motif repository
+        uses: actions/checkout@v4
+        with:
+          repository: plxtra/motif
+          path: motif-api
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build dist
+        run: npm run dist
+
+      - name: Build docs
+        run: npm run docs:build
+
+      - name: Upload static files as artifact
+        id: deployment
+        uses: actions/upload-pages-artifact@v3 # or specific "vX.X.X" version tag for this action
+        with:
+          path: docs/motif-api
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
