@@ -2,14 +2,8 @@
   "$schema": "https://typedoc.org/schema.json",
   "name": "Motif API",
   "tsconfig": "./tsconfig.json",
-  "entryPoints": [
-    "../motif/motif/lib/src/eager/extensions/api/types",
-    "../motif/motif/lib/src/eager/extensions/api/extension-svc",
-    "../motif/motif/lib/src/eager/extensions/api/frame-svc",
-    "../motif/motif/lib/src/eager/extensions/api/extension-registrar.d.ts",
-    "../motif/motif/lib/src/eager/extensions/api/extension.d.ts",
-  ],
-
+  "entryPoints": ["../motif/motif/lib/src/eager/extensions/api"],
+  
   "entryPointStrategy": "expand",
   "alwaysCreateEntryPointModule": false,
   "exclude": ["../motif/motif/lib/src/eager/extensions/api/**/index.d.ts"],
