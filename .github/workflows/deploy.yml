@@ -1,10 +1,6 @@
 name: Deploy to GitHub Pages
 
 on:
-  # Trigger the workflow every time you push to the `main` branch
-  # Using a different branch name? Replace `main` with your branch’s name
-  push:
-    branches: [ docs-publish ]
   # Allows you to run this workflow manually from the Actions tab on GitHub.
   workflow_dispatch:
 
@@ -14,27 +10,31 @@ permissions:
   id-token: write
 
 jobs:
+  upload-api-artifact:
+    uses: plxtra/motif/.github/workflows/upload-api-artifact.yml@main
+    secrets:
+      UPLOAD_API_ARTIFACT: ${{ secrets.UPLOAD_API_ARTIFACT }}
+
   build:
     runs-on: ubuntu-latest
+    needs: [upload-api-artifact]
+    defaults:
+        run:
+          working-directory: motif-api # Set working directory to checkout path
     steps:
-      # Use reusable workflow
-      # https://stackoverflow.com/questions/70003863/reusing-github-action-workflow-steps-inside-another-job
       - name: Checkout Motif API repository
         uses: actions/checkout@v4
         with:
-          path: motif-api
+          path: motif-api # Place in motif-api sub-directory so that docs-build can access ../motif/lib
 
-      - name: Checkout Motif repository
-        uses: actions/checkout@v4
+      - name: Download lib
+        uses: actions/download-artifact@v4
         with:
-          repository: plxtra/motif
-          path: motif-api
+          name: lib-output
+          path: motif/motif/lib # Not relative to working-directory
 
       - name: Install dependencies
         run: npm ci
-
-      - name: Build dist
-        run: npm run dist
 
       - name: Build docs
         run: npm run docs:build
@@ -43,7 +43,8 @@ jobs:
         id: deployment
         uses: actions/upload-pages-artifact@v3 # or specific "vX.X.X" version tag for this action
         with:
-          path: docs/motif-api
+          name: motif-api-docs
+          path: motif-api/docs/motif-api  # Not relative to working-directory
 
   deploy:
     needs: build
@@ -55,3 +56,5 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+        with:
+          artifact_name: motif-api-docs
