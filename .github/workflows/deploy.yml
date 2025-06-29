@@ -10,14 +10,14 @@ permissions:
   id-token: write
 
 jobs:
-  upload-api-artifact:
-    uses: plxtra/motif/.github/workflows/upload-api-artifact.yml@main
+  upload-api-artifacts:
+    uses: plxtra/motif/.github/workflows/upload-api-artifacts.yml@main
     secrets:
-      UPLOAD_API_ARTIFACT: ${{ secrets.UPLOAD_API_ARTIFACT }}
+      MOTIF_UPLOAD_API_ARTIFACTS_ACCESS: ${{ secrets.MOTIF_UPLOAD_API_ARTIFACTS_ACCESS }}
 
   build:
     runs-on: ubuntu-latest
-    needs: [upload-api-artifact]
+    needs: [upload-api-artifacts]
     defaults:
         run:
           working-directory: motif-api # Set working directory to checkout path
@@ -27,14 +27,38 @@ jobs:
         with:
           path: motif-api # Place in motif-api sub-directory so that docs-build can access ../motif/lib
 
+      - name: Install dependencies
+        run: npm ci
+
       - name: Download lib
         uses: actions/download-artifact@v4
         with:
           name: lib-output
           path: motif/motif/lib # Not relative to working-directory
 
-      - name: Install dependencies
-        run: npm ci
+      - name: Download ts-demo extension
+        uses: actions/download-artifact@v4
+        with:
+          name: ts-demo-extension
+          path: motif/extensions/ts-demo
+
+      - name: Download highcharts extension
+        uses: actions/download-artifact@v4
+        with:
+          name: highcharts-extension
+          path: motif/extensions/highcharts
+
+      - name: Download website-embed extension
+        uses: actions/download-artifact@v4
+        with:
+          name: website-embed-extension
+          path: motif/extensions/website-embed
+
+      - name: Download XOSP config
+        uses: actions/download-artifact@v4
+        with:
+          name: config-xosp-dev
+          path: motif/motif/src/config/config.xosp-dev.json
 
       - name: Build docs
         run: npm run docs:build
