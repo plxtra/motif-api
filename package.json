@@ -1,8 +1,7 @@
 {
-  "name": "motif-api",
-  "version": "1.0.0",
-  "private": true,
-  "description": "Motif API website publisher",
+  "name": "@plxtra/motif-api",
+  "version": "3.1.1",
+  "description": "Plxtra Motif API",
   "keywords": [
     "motif",
     "api",
@@ -16,16 +15,26 @@
     "type": "git",
     "url": "git+ssh://git@github.com/plxtra/motif-api.git"
   },
-  "license": "MIT",
+  "license": "Apache-2.0",
   "author": "Paul Klink",
   "type": "module",
-  "main": "index.js",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist/*",
+    "./LICENSE"
+  ],
   "scripts": {
+    "clean": "npx del-cli dist",
+    "lib": "cd ../motif/motif && npm run lib",
+    "rollup": "npm run clean && npx api-extractor run --local --verbose",
+    "dist": "npm run lib && npm run rollup",
     "docs:build": "typedoc --options ./typedoc.json",
     "docs:serve": "ws -d docs"
   },
   "devDependencies": {
+    "@microsoft/api-extractor": "^7.52.8",
+    "del-cli": "^6.0.0",
     "local-web-server": "^5.4.0",
-    "typedoc": "^0.28.5"
+    "typedoc": "^0.28.7"
   }
 }

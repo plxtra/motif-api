@@ -25,40 +25,42 @@ jobs:
       - name: Checkout Motif API repository
         uses: actions/checkout@v4
         with:
-          path: motif-api # Place in motif-api sub-directory so that docs-build can access ../motif/lib
+          path: motif-api # Place in motif-api sub-directory so that docs-build can access files from sibling repositories
 
       - name: Install dependencies
         run: npm ci
 
+      # Get Motif extensions used as examples or guides. No need to install dependencies as dist files not needed.
+      - name: Checkout TsDemo Motif extension repository
+        uses: actions/checkout@v4
+        with:
+          repository: plxtra/ts-demo-motif-extension
+          path: ts-demo-motif-extension # Not relative to working-directory
+
+      - name: Checkout WebsiteEmbed Motif extension repository
+        uses: actions/checkout@v4
+        with:
+          repository: plxtra/website-embed-motif-extension
+          path: website-embed-motif-extension
+
+      - name: Checkout Highcharts Motif extension repository
+        uses: actions/checkout@v4
+        with:
+          repository: plxtra/highcharts-motif-extension
+          path: highcharts-motif-extension
+
+      # Get Motif artifacts
       - name: Download lib
         uses: actions/download-artifact@v4
         with:
           name: lib-output
-          path: motif/motif/lib # Not relative to working-directory
-
-      - name: Download ts-demo extension
-        uses: actions/download-artifact@v4
-        with:
-          name: ts-demo-extension
-          path: motif/extensions/ts-demo
-
-      - name: Download highcharts extension
-        uses: actions/download-artifact@v4
-        with:
-          name: highcharts-extension
-          path: motif/extensions/highcharts
-
-      - name: Download website-embed extension
-        uses: actions/download-artifact@v4
-        with:
-          name: website-embed-extension
-          path: motif/extensions/website-embed
+          path: motif/motif/lib # Not relative to working-directory - remove one level of motif when motif repository is refactored
 
       - name: Download XOSP config
         uses: actions/download-artifact@v4
         with:
           name: config-xosp-dev
-          path: motif/motif/src/config/config.xosp-dev.json
+          path: motif/motif/src/config/config.xosp-dev.json # Not relative to working-directory - remove one level of motif when motif repository is refactored
 
       - name: Build docs
         run: npm run docs:build
