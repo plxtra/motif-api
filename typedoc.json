@@ -15,9 +15,12 @@
   "router": "structure-dir",
   "disableSources": true,
   "hostedBaseUrl": "https://plxtra.org/motif-api/",
-  // "projectDocuments": [
-  //   "src-docs/overview/index.md",
-  // ],
+  "projectDocuments": [
+    "src-docs/overview/index.md",
+    "src-docs/guide/index.md",
+    "src-docs/architecture/index.md",
+    "src-docs/examples/index.md",
+  ],
   "out": "./docs/motif-api/",
   "navigationLinks": {
       "GitHub": "https://github.com/plxtra/motif-api",

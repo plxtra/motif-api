@@ -1,0 +1,5 @@
+---
+title: Config
+---
+
+# TypeScript Config
