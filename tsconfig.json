@@ -3,14 +3,14 @@
         "declaration": true,
         "declarationMap": true,
         "emitDeclarationOnly": true,
-        "declarationDir": "../motif/motif/lib",
+        "declarationDir": "../motif/lib",
         "noEmit": true // Do not compile the JS (or TS) files in this project on build
     },
     "exclude": [
         "../motif/node_modules/**.*",
-        "../motif/motif/src/**.*",
+        "../motif/src/**.*",
     ],
     "include": [
-        "../motif/motif/lib/src/eager/extensions/api"
+        "../motif/lib/src/eager/extensions/api"
     ],
 }

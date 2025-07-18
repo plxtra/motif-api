@@ -20,6 +20,7 @@ jobs:
     needs: [upload-api-artifacts]
     defaults:
         run:
+          shell: pwsh # Use PowerShell shell for commands
           working-directory: motif-api # Set working directory to checkout path
     steps:
       - name: Checkout Motif API repository
@@ -49,18 +50,19 @@ jobs:
           repository: plxtra/highcharts-motif-extension
           path: highcharts-motif-extension
 
-      # Get Motif artifacts
+      # Get XOSP Motif Config as examples or guides. Nothing to install.
+      - name: Checkout XOSP Motif Config repository
+        uses: actions/checkout@v4
+        with:
+          repository: plxtra/xosp-motif-config
+          path: xosp-motif-config
+
+      # Get Motif Lib artifact
       - name: Download lib
         uses: actions/download-artifact@v4
         with:
           name: lib-output
           path: motif/motif/lib # Not relative to working-directory - remove one level of motif when motif repository is refactored
-
-      - name: Download XOSP config
-        uses: actions/download-artifact@v4
-        with:
-          name: config-xosp-dev
-          path: motif/motif/src/config/config.xosp-dev.json # Not relative to working-directory - remove one level of motif when motif repository is refactored
 
       - name: Build docs
         run: npm run docs:build

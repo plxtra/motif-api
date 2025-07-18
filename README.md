@@ -4,6 +4,8 @@
 
 API used to build Motif extensions
 
+Note that this npm package is configured to use PowerShell shell.
+
 ## API Documentation
 
 Use this documentation to understand how to build a Motif Extension using this Motif API:

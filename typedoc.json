@@ -2,11 +2,11 @@
   "$schema": "https://typedoc.org/schema.json",
   "name": "Motif API",
   "tsconfig": "./tsconfig.json",
-  "entryPoints": ["../motif/motif/lib/src/eager/extensions/api"],
+  "entryPoints": ["../motif/lib/src/eager/extensions/api"],
   
   "entryPointStrategy": "expand",
   "alwaysCreateEntryPointModule": false,
-  "exclude": ["../motif/motif/lib/src/eager/extensions/api/**/index.d.ts"],
+  "exclude": ["../motif/lib/src/eager/extensions/api/**/index.d.ts"],
   "excludeInternal": true,
   "readme": "README.md",
   "includeVersion": true,
