@@ -62,7 +62,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: lib-output
-          path: motif/motif/lib # Not relative to working-directory - remove one level of motif when motif repository is refactored
+          path: motif/lib # Not relative to working-directory
 
       - name: Build docs
         run: npm run docs:build
